@@ -1,0 +1,64 @@
+<div class="page-header">
+  <%= link_to apartments_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+  <%= link_to edit_apartment_path(@apartment), class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-pencil"></span>
+    Edit
+  <% end %>
+  <h1>Show apartment</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Street address:</dt>
+  <dd><%= @apartment.street_address %></dd>
+
+  <dt>City:</dt>
+  <dd><%= @apartment.city %></dd>
+
+  <dt>State:</dt>
+  <dd><%= @apartment.state %></dd>
+
+  <dt>Zip code:</dt>
+  <dd><%= @apartment.zip_code %></dd>
+
+  <dt>Contact name:</dt>
+  <dd><%= @apartment.contact_name %></dd>
+
+  <dt>Contact email:</dt>
+  <dd><%= @apartment.contact_email %></dd>
+
+  <dt>Latitude:</dt>
+  <dd><%= @apartment.latitude %></dd>
+
+  <dt>Longitude:</dt>
+  <dd><%= @apartment.longitude %></dd>
+
+  <dt>Image:</dt>
+  <dd>
+    <% if !@apartment.image_file_name.nil? %>
+      <%= link_to image_tag(@apartment.image.url(:large)), @apartment.image.url %>
+    <% end %>
+  </dd>
+</dl>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat": <%= @apartment.latitude %>,
+      "lng": <%= @apartment.longitude %>,
+      "infowindow": "hello!"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  handler.getMap().setZoom(14);
+});
+</script>

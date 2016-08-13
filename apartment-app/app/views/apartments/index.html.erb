@@ -1,0 +1,73 @@
+<div class="page-header">
+  <%= link_to new_apartment_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Apartment
+  <% end %>
+  <h1>Listing apartments</h1>
+</div>
+
+<form action="/search/index" method="get">
+  <input type="text" name="query"/>
+  <input type="submit"/>
+</form>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Street address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip code</th>
+            <th>Contact name</th>
+            <th>Contact email</th>
+            <th>Created by</th>
+            <th>Image</th>
+            <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @apartments) do |apartment| %>
+            <td><%= apartment.street_address %></td>
+            <td><%= apartment.city %></td>
+            <td><%= apartment.state %></td>
+            <td><%= apartment.zip_code %></td>
+            <td><%= apartment.contact_name %></td>
+            <td><%= apartment.contact_email %></td>
+            <td><%= apartment.user.nil? ? "Unknown" : apartment.user.email %></td>
+            <td>
+              <% if !apartment.image_file_name.nil? %>
+                <%= link_to image_tag(apartment.image.url(:small)), apartment.image.url %>
+              <% end %>
+            </td>
+            <td><%= link_to 'Show', apartment %></td>
+        <td>
+          <% if check_only_creator_can_see(apartment, current_user) %>
+            <%= link_to 'Edit', edit_apartment_path(apartment) %>
+          <% end %>
+        </td>
+        <td>
+          <% if check_only_creator_can_see(apartment, current_user) %>
+            <%= link_to 'Destroy', apartment, method: :delete, data: { confirm: 'Are you sure?' } %>
+          <% end %>
+        </td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script type="text/javascript">
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers((<%=raw @hash.to_json %>));
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+  });
+</script>

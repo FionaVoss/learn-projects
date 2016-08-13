@@ -1,0 +1,37 @@
+body{
+  background-color: lightgrey;
+ }
+
+#question {
+   margin-top: 50px;
+   font-size: 12px;
+   word-wrap: break-word;
+   word-break: break-all;
+   height: 80px;
+   width: 450px;
+ }
+
+.questionStyle {
+  background-color: lavender;
+ }
+.answerStyle {
+  background-color: transparent;
+  border: none;
+  color: lavender;
+}
+.circle {
+  border-radius: 50%;
+  width: 800px;
+  height: 800px;
+  background-color: black;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  width:200px;
+  height: 200px;
+  background-image: center;
+  margin-top: 100px;
+
+}

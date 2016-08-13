@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgresql
+  password:
+  timeout: 5000
+
+development:
+  <<: *default
+  database: apartment-app_development
+
+test:
+  <<: *default
+  database: apartment-app_test

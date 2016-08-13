@@ -1,0 +1,55 @@
+<h1>Car Simulator</h1>
+<!-- <p>Find me in app/views/car_sim/simulate.html.erb</p> -->
+<p>Make: <%= @car.make %></p>
+<p>Year: <%= @car.year %></p>
+<p>Speed: <%=@car.speed %> mph</p>
+<p>
+  <form action="/car_sim/accelerate" method="get">
+    <% if @car.parking_brake %>
+      <input type="submit" value="Accelerate" disabled/>
+    <% else %>
+      <input type="submit" value="Accelerate"/>
+    <% end %>
+  </form>
+</p>
+<p>
+  <form action="/car_sim/brake" method="get">
+    <% if @car.speed > 0 %>
+    <input type="submit" value="Brake"/>
+    <% else %>
+    <input type="submit" value="Brake" disabled/>
+    <% end %>
+  </form>
+</p>
+<p>Lights: <%= @car.lights %>
+  <form action="/car_sim/toggle_lights" method="get">
+    <input type="submit" value="
+      <% if @car.lights == "On" %>
+        Turn Off
+      <% else %>
+        Turn On
+      <%end %>
+    "/>
+  </form>
+</p>
+<p>Parking Brakes:
+  <% if @car.parking_brake %>
+    On
+  <% else %>
+    Off
+  <% end %>
+</p>
+<form action="/car_sim/toggle_parking_brake" method="get">
+  <% if @car.parking_brake %>
+    <input type="radio" name="parking_brake" value="true" checked/>On
+    <input type="radio" name="parking_brake" value="false" />Off
+  <% else %>
+    <input type="radio" name="parking_brake" value="true"/>On
+    <input type="radio" name="parking_brake" value="false" checked/>Off
+  <% end %>
+  <% if @car.speed == 0 %>
+    <input type="submit"/>
+  <% else %>
+    <input type="submit" disabled/>
+  <% end %>
+</form>
